@@ -10,47 +10,26 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+    //var ary = ["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"]
     var ary = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        insertRow(ind: 0, txt: "Level 1") {
-            
-            self.insertRow(ind: 1, txt: "Level 2") {
-                
-                self.insertRow(ind: 2, txt: "Level 3") {
-                    
-                    self.insertRow(ind: 3, txt: "Level 4") {
-                    
-                        self.insertRow(ind: 4, txt: "Level 5") {
-                            
-                            self.insertRow(ind: 5, txt: "Level 6") {
-                               
-                                self.insertRow(ind: 6, txt: "Level 7") {
-                                    
-                                    self.insertRow(ind: 7, txt: "Level 8") {}
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
+        //insertRowsMode2()
+        insertRowsMode3()
     }
     
-    func insertRow(ind:Int,txt:String,comp:@escaping ()->Void) {
+    
+    @IBAction func redo(_ sender: Any) {
         
-        let indPath = IndexPath(row: ind, section: 0)
-        ary.append(txt)
-        tableView.insertRows(at: [indPath], with: UITableViewRowAnimation.right)
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
-            comp()
-        }
+        ary.removeAll()
+        tableView.reloadData()
+        insertRowsMode3()
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,6 +37,63 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    // MARK: - second way to show table
+    func insertRowsMode2() {
+        
+        insertRowMode2(ind: 0, str: "Level 1")
+        insertRowMode2(ind: 1, str: "Level 2")
+        insertRowMode2(ind: 2, str: "Level 3")
+        insertRowMode2(ind: 3, str: "Level 4")
+        insertRowMode2(ind: 4, str: "Level 5")
+        insertRowMode2(ind: 5, str: "Level 6")
+        insertRowMode2(ind: 6, str: "Level 7")
+        
+    }
+    
+    func insertRowMode2(ind:Int,str:String) {
+        
+        let indPath = IndexPath(row: ind, section: 0)
+        ary.append(str)
+        tableView.insertRows(at: [indPath], with: .right)
+    }
+    
+    // MARK: - third way to show table
+    func insertRowsMode3() {
+        
+        insertRowMode3(ind: 0, str: "Level 1") { 
+            self.insertRowMode3(ind: 1, str: "Level 2", comp: {
+                self.insertRowMode3(ind: 2, str: "Level 3", comp: {
+                    self.insertRowMode3(ind: 3, str: "Level 4", comp: {
+                        self.insertRowMode3(ind: 4, str: "Level 5", comp: {
+                            self.insertRowMode3(ind: 5, str: "Level 6", comp: {
+                                self.insertRowMode3(ind: 6, str: "Level 7", comp: {
+                                    self.insertRowMode3(ind: 7, str: "Level 8", comp: {
+                                        self.insertRowMode3(ind: 8, str: "Level 9", comp: {
+                                            print("every row is inserted")
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        }
+    }
+    
+    func insertRowMode3(ind:Int,str:String,comp:@escaping ()->Void) {
+        
+        let indPath = IndexPath(row: ind, section: 0)
+        ary.append(str)
+        tableView.insertRows(at: [indPath], with: .right)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.02) {
+            comp()
+        }
+    }
+
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

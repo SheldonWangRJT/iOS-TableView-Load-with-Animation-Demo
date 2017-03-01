@@ -22,10 +22,10 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3V-sE-hDU" id="zf9-NO-Nzt">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tgt-c3-9ut">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="tgt-c3-9ut">
                                             <rect key="frame" x="42" y="15" width="290" height="70"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="290" id="Prx-nl-5Fn"/>
@@ -33,9 +33,9 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mnh-MQ-70F">
-                                            <rect key="frame" x="166" y="39" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <rect key="frame" x="168.5" y="40.5" width="37" height="18.5"/>
+                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -46,6 +46,7 @@
                                         <constraint firstItem="Mnh-MQ-70F" firstAttribute="centerX" secondItem="zf9-NO-Nzt" secondAttribute="centerX" id="uEG-5F-6tm"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <connections>
                                     <outlet property="lbl" destination="Mnh-MQ-70F" id="ckE-zZ-IuU"/>
                                 </connections>
@@ -56,7 +57,13 @@
                             <outlet property="delegate" destination="qom-aD-Rwr" id="uQR-IB-8EV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ehR-gU-d2y"/>
+                    <navigationItem key="navigationItem" id="ehR-gU-d2y">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="ytk-cN-rnp">
+                            <connections>
+                                <action selector="redo:" destination="qom-aD-Rwr" id="hHl-Pi-9hl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zOt-rg-bA4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -81,4 +88,7 @@
             <point key="canvasLocation" x="122.40000000000001" y="166.8665667166417"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="banner" width="290" height="81"/>
+    </resources>
 </document>
