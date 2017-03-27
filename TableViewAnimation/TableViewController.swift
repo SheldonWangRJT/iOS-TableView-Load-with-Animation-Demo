@@ -10,8 +10,8 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
-    //var ary = ["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"]
-    var ary = [String]()
+    var ary = ["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"]
+    var rows = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,84 +26,66 @@ class TableViewController: UITableViewController {
     
     
     @IBAction func redo(_ sender: Any) {
-        
-        ary.removeAll()
+        //adding logic to reset rows
+        rows = 0
         tableView.reloadData()
         insertRowsMode3()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
     // MARK: - second way to show table
     func insertRowsMode2() {
-        
-        insertRowMode2(ind: 0, str: "Level 1")
-        insertRowMode2(ind: 1, str: "Level 2")
-        insertRowMode2(ind: 2, str: "Level 3")
-        insertRowMode2(ind: 3, str: "Level 4")
-        insertRowMode2(ind: 4, str: "Level 5")
-        insertRowMode2(ind: 5, str: "Level 6")
-        insertRowMode2(ind: 6, str: "Level 7")
+        //clean the code for mode 2
+        //using for loop
+        //in this case the rows cannot be ary.count any more
+        for i in 0..<ary.count {
+            insertRowMode2(ind: i, str: ary[i])
+        }
         
     }
     
     func insertRowMode2(ind:Int,str:String) {
         
         let indPath = IndexPath(row: ind, section: 0)
-        ary.append(str)
+        //update number of rows
+        rows = ind + 1
         tableView.insertRows(at: [indPath], with: .right)
     }
     
     // MARK: - third way to show table
     func insertRowsMode3() {
         
-        insertRowMode3(ind: 0, str: "Level 1") { 
-            self.insertRowMode3(ind: 1, str: "Level 2", comp: {
-                self.insertRowMode3(ind: 2, str: "Level 3", comp: {
-                    self.insertRowMode3(ind: 3, str: "Level 4", comp: {
-                        self.insertRowMode3(ind: 4, str: "Level 5", comp: {
-                            self.insertRowMode3(ind: 5, str: "Level 6", comp: {
-                                self.insertRowMode3(ind: 6, str: "Level 7", comp: {
-                                    self.insertRowMode3(ind: 7, str: "Level 8", comp: {
-                                        self.insertRowMode3(ind: 8, str: "Level 9", comp: {
-                                            print("every row is inserted")
-                                        })
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-            })
-        }
+        //adding logic to reset rows
+        rows = 0
+        //invoke the new insertRowMode3 function
+        insertRowMode3(ind: 0)
     }
     
-    func insertRowMode3(ind:Int,str:String,comp:@escaping ()->Void) {
-        
+    //Changed insertRowMode3 into recursive to gain reusability
+    //1. removed the second input of string
+    //2. removed the completion handler
+    //3. added recursive invokation
+    func insertRowMode3(ind:Int) {
         let indPath = IndexPath(row: ind, section: 0)
-        ary.append(str)
+        rows = ind + 1
         tableView.insertRows(at: [indPath], with: .right)
         
+        //add condition here if ind == ary.count-1 return
+        guard ind < ary.count-1 else { return }
         DispatchQueue.main.asyncAfter(deadline: .now()+0.02) {
-            comp()
+            //invoke the function itself
+            self.insertRowMode3(ind: ind+1)
         }
     }
 
     
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return ary.count
+        //changes here compare to the video tutorial
+        return rows
     }
 
     
